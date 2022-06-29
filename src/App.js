@@ -1,5 +1,5 @@
 import { WhiteBoard } from "./whiteBoard";
-
+import "./App.css";
 
 function App() {
   return (
