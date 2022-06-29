@@ -61,6 +61,7 @@ function Comments() {
         <Col span={24}>
           <Row>
             <Input.TextArea
+              placeholder="请输入评论或记录面试流程"
               onChange={changeComment}
               value={comment}
             ></Input.TextArea>
@@ -110,14 +111,20 @@ function Room() {
   return (
     <>
       <Col Span={16}>
-        <Row style={{ padding: "20px" }}>
+        <Row style={{ padding: "10px" }}>
           <Col span={12}>
-            <Input placeholder="13888888888" onChange={changeRoomInput}></Input>
+            <Input
+              placeholder="请输入候选人的唯一识别标记（比如手机号）"
+              onChange={changeRoomInput}
+            ></Input>
           </Col>
           <Col span={12}>
             <Button onClick={changeRoom}> 切换房间 </Button>
           </Col>
         </Row>
+        <Row
+          style={{ padding: "10px" }}
+        >{`请将互动白板编程链接分享给候选人： https://code.meideng.dev/${room}`}</Row>
         <Row>
           <iframe
             height="1600px"
