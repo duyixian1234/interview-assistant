@@ -20,6 +20,7 @@ import "./whiteBoard.css";
 const { Content } = Layout;
 
 function Comments() {
+  const scrollRef = React.useRef(null);
   const [loading, setLoading] = React.useState(true);
   const [comment, setComment] = React.useState("");
   const [comments, setComments] = React.useState([]);
@@ -38,6 +39,11 @@ function Comments() {
     setLoading(false);
     // eslint-disable-next-line
   }, []);
+
+  React.useEffect(() => {
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [comments]);
+
   React.useEffect(() => {
     if (loading) return;
     setContent({ id: "default", content: comments });
@@ -115,7 +121,10 @@ function Comments() {
                     </Button>
                   }
                 >
-                  <div style={{ overflow: "auto", height: 200 }}>
+                  <div
+                    ref={scrollRef}
+                    style={{ overflow: "auto", height: "30vh", paddingTop: 10 }}
+                  >
                     <Timeline>
                       {comments.map(({ ts, comment }) => (
                         <Timeline.Item key={ts}>{`${ts.format(
@@ -198,7 +207,7 @@ export function WhiteBoard() {
           <Row>
             <Room />
           </Row>
-            <Comments />
+          <Comments />
           <BackTop />
         </Content>
       </Layout>
