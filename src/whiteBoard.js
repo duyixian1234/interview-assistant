@@ -15,6 +15,7 @@ import {
 import dayjs from "dayjs";
 import { nanoid } from "nanoid";
 import { getContent, init, setContent } from "./storage";
+import "./whiteBoard.css";
 
 const { Content } = Layout;
 
@@ -74,56 +75,61 @@ function Comments() {
 
   return (
     <>
-      <Col span={8}>
-      <Row
-      style={{paddingTop:"20px"}}
-      >
-      <Card title="实时记录" size="default" bordered={true} style={{width:"400px"}}>
-        <Row>
-          <Col span={24}>
+      <div className="comment">
+        <Row style={{ paddingTop: "20px" }}>
+          <Card
+            title="实时记录"
+            size="default"
+            bordered={true}
+            style={{ width: "400px" }}
+          >
             <Row>
-              <Input.TextArea
-                placeholder="请输入评论或记录面试流程。Ctrl + Enter 提交内容"
-                onChange={changeComment}
-                onKeyDown={handleKeyUp}
-                value={comment}
-              ></Input.TextArea>
+              <Col span={24}>
+                <Row>
+                  <Input.TextArea
+                    placeholder="请输入评论或记录面试流程。Ctrl + Enter 提交内容"
+                    onChange={changeComment}
+                    onKeyDown={handleKeyUp}
+                    value={comment}
+                  ></Input.TextArea>
+                </Row>
+                <Row style={{ paddingTop: "20px", paddingBottom: "20px" }}>
+                  <Space size="middle">
+                    <Button onClick={changeComments} type="default">
+                      记录
+                    </Button>
+                    <Button onClick={removeLastComment}>删除上一条</Button>
+                  </Space>
+                </Row>
+              </Col>
             </Row>
-            <Row style={{ paddingTop: "20px", paddingBottom: "20px" }}>
-              <Space size="middle">
-                <Button onClick={changeComments} type="default">
-                  记录
-                </Button>
-                <Button onClick={removeLastComment}>删除上一条</Button>
-              </Space>
+            <Row>
+              <Col span={24}>
+                <Card
+                  title="面试记录与评价"
+                  size="default"
+                  bordered={true}
+                  extra={
+                    <Button onClick={copy} type="primary">
+                      点击复制
+                    </Button>
+                  }
+                >
+                  <div style={{ overflow: "auto", height: 200 }}>
+                    <Timeline>
+                      {comments.map(({ ts, comment }) => (
+                        <Timeline.Item key={ts}>{`${ts.format(
+                          "HH:mm:ss"
+                        )} ${comment}`}</Timeline.Item>
+                      ))}
+                    </Timeline>
+                  </div>
+                </Card>
+              </Col>
             </Row>
-          </Col>
+          </Card>
         </Row>
-        <Row>
-          <Col span={24}>
-            <Card
-              title="面试记录与评价"
-              size="default"
-              bordered={true}
-              extra={
-                <Button onClick={copy} type="primary">
-                  点击复制
-                </Button>
-              }
-            >
-              <Timeline>
-                {comments.map(({ ts, comment }) => (
-                  <Timeline.Item key={ts}>{`${ts.format(
-                    "HH:mm:ss"
-                  )} ${comment}`}</Timeline.Item>
-                ))}
-              </Timeline>
-            </Card>
-          </Col>
-        </Row>
-      </Card>
-      </Row>
-      </Col>
+      </div>
     </>
   );
 }
@@ -145,7 +151,7 @@ function Room() {
 
   return (
     <>
-      <Col span={16}>
+      <Col span={16} style={{ minWidth: 800 }}>
         <Row style={{ padding: "10px", paddingTop: "20px" }}>
           <Col span={12}>
             <Input
