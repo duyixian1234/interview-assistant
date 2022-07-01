@@ -85,7 +85,7 @@ function Comments() {
               <Input.TextArea
                 placeholder="请输入评论或记录面试流程。Ctrl + Enter 提交内容"
                 onChange={changeComment}
-                onKeyUp={handleKeyUp}
+                onKeyDown={handleKeyUp}
                 value={comment}
               ></Input.TextArea>
             </Row>
