@@ -151,7 +151,7 @@ function Room() {
 
   return (
     <>
-      <Col span={16} style={{ minWidth: 800 }}>
+      <Col span={24} style={{ minWidth: 800 }}>
         <Row style={{ padding: "10px", paddingTop: "20px" }}>
           <Col span={12}>
             <Input
@@ -180,7 +180,7 @@ function Room() {
         <Row style={{ padding: "10px" }}>
           <iframe
             height="1600px"
-            width="800px"
+            width="100%"
             src={`https://code.meideng.dev/${room}`}
             title={room}
           ></iframe>
@@ -197,8 +197,8 @@ export function WhiteBoard() {
         <Content>
           <Row>
             <Room />
-            <Comments />
           </Row>
+            <Comments />
           <BackTop />
         </Content>
       </Layout>
