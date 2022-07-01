@@ -1,0 +1,16 @@
+@media screen and  (min-width:1000px){
+    .comment{
+        position: fixed;
+        top: 0px;
+        right: 50px;
+  
+    }
+}
+@media screen and (max-width:1000px){
+    .comment{
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        height: fit-content;
+    }
+}
