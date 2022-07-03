@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "aegis-web-sdk": "^1.35.26",
     "antd": "^4.21.4",
     "dayjs": "^1.11.3",
     "nanoid": "^4.0.0",
