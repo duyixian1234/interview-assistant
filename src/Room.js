@@ -19,7 +19,7 @@ export function Room() {
 
   return (
     <>
-      <Col span={24} style={{ minWidth: 800 }}>
+      <Col span={24} style={{ minWidth: 800, display: "flex", flexDirection: "column" }}>
         <Row style={{ padding: "10px", paddingTop: "20px" }}>
           <Col span={12}>
             <Input
@@ -45,9 +45,9 @@ export function Room() {
             message={`请将互动白板编程链接分享给候选人： https://code.meideng.dev/${room}`}
           ></Alert>
         </Row>
-        <Row style={{ padding: "10px" }}>
+        <Row style={{ padding: "10px", flexGrow: 1 }}>
           <iframe
-            height="1600px"
+            height="100%"
             width="100%"
             src={`https://code.meideng.dev/${room}`}
             title={room}

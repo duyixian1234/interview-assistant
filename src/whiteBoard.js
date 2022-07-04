@@ -9,9 +9,9 @@ const { Content } = Layout;
 export function WhiteBoard() {
   return (
     <>
-      <Layout>
-        <Content>
-          <Row>
+      <Layout style={{height: "100vh"}}>
+        <Content style={{height: "100%", display: "flex", flexDirection: "column"}}>
+          <Row style={{flexGrow: 1}}>
             <Room />
           </Row>
           <Comments />
