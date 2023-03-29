@@ -19,12 +19,20 @@ export function Room() {
   const [roomIds, setRoomIds] = React.useState([]);
   const [selected, setSelected] = React.useState("");
   React.useEffect(() => {
-    const roomIds = getContent({ id: "roomIds" }) || [];
-    setRoomIds(roomIds);
-    if (roomIds.length > 0) {
-      setRoom(roomIds[0]);
-      setSelected(roomIds[0]);
-    }
+    const roomIds = new Set(getContent({ id: "roomIds" }) || []);
+    setRoomIds(Array.from(roomIds));
+    const _room = new URLSearchParams(document.location.search).get("_room");
+    if (!_room) return;
+    if (!roomIds.has(_room)) return;
+    setRoom(_room);
+    setRoomInput(_room);
+    setSelected(_room);
+    const content = getContent({ id: _room });
+    setContent({ id: "default", content });
+    setTimeout(() => {
+      document.getElementById("iframe").contentDocument.location.reload(true);
+    }, 1000);
+    console.log(`Load room ${_room}`);
   }, []);
   function changeRoomInput({ target }) {
     setRoomInput(target.value);
@@ -32,6 +40,9 @@ export function Room() {
   function changeRoom() {
     console.log(`Change room to ${roomInput}`);
     setRoom(roomInput);
+    setTimeout(() => {
+      document.getElementById("iframe").contentDocument.location.reload(true);
+    }, 1000);
   }
   function random() {
     setRoomInput(nanoid(10));
@@ -39,6 +50,7 @@ export function Room() {
   }
   function onSelectedChange(value) {
     setSelected(value);
+    console.log(`Selected ${value}`);
   }
   function copyUrl() {
     const url = `https://code.meideng.dev/${room}`;
@@ -63,12 +75,9 @@ export function Room() {
     message.success("已保存");
   }
   function load() {
-    const id = selected;
-    const content = getContent({ id });
-    setContent({ id: "default", content });
-    changeRoom(id);
+    console.log("load", selected);
     message.success("已载入");
-    window.location.reload();
+    window.location.href = `/?_room=${selected}`;
   }
 
   function remove() {
@@ -103,6 +112,9 @@ export function Room() {
               <Button type="primary" onClick={random}>
                 随机分配
               </Button>
+              <Button type="primary" onClick={save}>
+                保存
+              </Button>
             </Space>
           </Col>
         </Row>
@@ -110,18 +122,19 @@ export function Room() {
           <Space>
             <Select
               style={{ width: 200 }}
-              defaultValue={room}
-              key={room}
               onChange={onSelectedChange}
               options={roomIds.map((id) => ({
                 value: id,
                 label: id,
               }))}
             ></Select>
-            <Button type="primary" onClick={save}>
-              保存
-            </Button>
-            <Button onClick={load}>载入</Button>
+
+            <Popconfirm
+              title={`确认载入记录：${selected}吗？`}
+              onConfirm={load}
+            >
+              <Button>载入</Button>
+            </Popconfirm>
             <Popconfirm
               title={`确认删除记录：${selected}吗？`}
               onConfirm={remove}
@@ -139,6 +152,7 @@ export function Room() {
         </Row>
         <Row style={{ padding: "10px", flexGrow: 1 }}>
           <iframe
+            id="iframe"
             height="100%"
             width="100%"
             src={`https://code.meideng.dev/${room}`}
