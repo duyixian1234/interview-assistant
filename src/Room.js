@@ -1,4 +1,4 @@
-import { Alert, Button, Col, Input, Row, Space } from "antd";
+import { Alert, Button,message, Col, Input, Row, Space } from "antd";
 import { nanoid } from "nanoid";
 import React from "react";
 
@@ -15,6 +15,18 @@ export function Room() {
   function random() {
     setRoomInput(nanoid(10));
     changeRoom();
+  }
+  function copyUrl(){
+    const url = `https://code.meideng.dev/${room}`;
+    const element = document.createElement("textarea");
+    element.value = url;
+    document.body.appendChild(element);
+    element.select();
+    if (document.execCommand("copy")) {
+      document.execCommand("copy");
+      message.success("已复制到剪贴板");
+    }
+    document.body.removeChild(element);
   }
 
   return (
@@ -42,7 +54,8 @@ export function Room() {
         <Row style={{ padding: "10px" }}>
           <Alert
             type="info"
-            message={`请将互动白板编程链接分享给候选人： https://code.meideng.dev/${room}`}
+            message={`请将互动白板编程链接分享给候选人（点击复制链接）： https://code.meideng.dev/${room}`}
+            onClick={copyUrl}
           ></Alert>
         </Row>
         <Row style={{ padding: "10px", flexGrow: 1 }}>
