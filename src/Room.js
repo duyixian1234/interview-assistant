@@ -1,10 +1,12 @@
 import { Alert, Button,message, Col, Input, Row, Space } from "antd";
 import { nanoid } from "nanoid";
 import React from "react";
+import { RoomCommentContext } from "./Context";
 
 export function Room() {
+  const { room, setRoom } = React.useContext(RoomCommentContext);
   const [roomInput, setRoomInput] = React.useState("");
-  const [room, setRoom] = React.useState("");
+
   function changeRoomInput({ target }) {
     setRoomInput(target.value);
   }
@@ -13,8 +15,10 @@ export function Room() {
     setRoom(roomInput);
   }
   function random() {
-    setRoomInput(nanoid(10));
-    changeRoom();
+    const newRoom = nanoid(10)
+    setRoomInput(newRoom);
+    console.log(`Change room to ${roomInput}`);
+    setRoom(newRoom);
   }
   function copyUrl(){
     const url = `https://code.meideng.dev/${room}`;

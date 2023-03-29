@@ -1,37 +1,16 @@
 import { Button, Card, Col, Input, message, Row, Space, Timeline } from "antd";
 import dayjs from "dayjs";
 import React from "react";
-import { getContent, init, setContent } from "./storage";
+import { RoomCommentContext } from "./Context";
 
 export function Comments() {
   const scrollRef = React.useRef(null);
-  const [loading, setLoading] = React.useState(true);
+  const { comments, setComments } = React.useContext(RoomCommentContext);
   const [comment, setComment] = React.useState("");
-  const [comments, setComments] = React.useState([]);
-  React.useEffect(() => {
-    if (!loading) return;
-    console.log("Loading comments from storage.");
-    init();
-    setComments(
-      getContent({ id: "default" })?.map(({ ts, comment }) => {
-        return {
-          ts: new dayjs(ts),
-          comment,
-        };
-      }) || []
-    );
-    setLoading(false);
-    // eslint-disable-next-line
-  }, []);
 
   React.useEffect(() => {
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [comments]);
-
-  React.useEffect(() => {
-    if (loading) return;
-    setContent({ id: "default", content: comments });
-  }, [comments, loading]);
 
   function changeComment({ target }) {
     setComment(target.value);
