@@ -74,7 +74,7 @@ export function Room() {
         <Row style={{ padding: "10px", paddingTop: "20px" }}>
           <Col span={12}>
             <Input
-              placeholder="请输入候选人的唯一识别标记（比如手机号）"
+              placeholder="请输入候选人的唯一识别标记（比如手机号），可以使用#号做备注，例如123456#张三"
               onChange={changeRoomInput}
               value={roomInput}
             ></Input>
@@ -120,7 +120,9 @@ export function Room() {
         <Row style={{ padding: "10px" }}>
           <Alert
             type="info"
-            message={`请将互动白板编程链接分享给候选人（点击复制链接）： https://code.meideng.dev/${room}`}
+            message={`请将互动白板编程链接分享给候选人（点击复制链接）： https://code.meideng.dev/${
+              room.split("#")[0]
+            }`}
             onClick={copyUrl}
           ></Alert>
         </Row>
@@ -128,8 +130,8 @@ export function Room() {
           <iframe
             height="100%"
             width="100%"
-            src={`https://code.meideng.dev/${room}`}
-            title={room}
+            src={`https://code.meideng.dev/${room.split("#")[0]}`}
+            title={room.split("#")[0]}
           ></iframe>
         </Row>
       </Col>
