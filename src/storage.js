@@ -18,13 +18,23 @@ export function getContents() {
   return loads(localStorage.getItem(STORAGE));
 }
 
-export function setContent({id, content}){
+export function setContent({ id, content }) {
   console.log("updating content for", id, content);
   const contents = getContents();
   contents[id] = content;
-  localStorage.setItem(STORAGE,dumps(contents));
+  localStorage.setItem(STORAGE, dumps(contents));
 }
 
-export function getContent({id}){
+export function getContent({ id }) {
   return getContents()[id];
+}
+
+export function getIds() {
+  return Object.keys(getContents());
+}
+
+export function removeContent({ id }) {
+  const contents = getContents();
+  delete contents[id];
+  localStorage.setItem(STORAGE, dumps(contents));
 }
