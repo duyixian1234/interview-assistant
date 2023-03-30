@@ -28,3 +28,13 @@ export function setContent({id, content}){
 export function getContent({id}){
   return getContents()[id];
 }
+
+export function getRooms() {
+  return Object.keys(getContents());
+}
+
+export function removeContent(id) {
+  const contents = getContents();
+  delete contents[id];
+  localStorage.setItem(STORAGE,dumps(contents));
+}

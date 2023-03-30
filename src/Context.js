@@ -5,6 +5,7 @@ const RoomCommentContext = React.createContext({
   setRoom: (room) => { },
   comments: [],
   setComments: (comments) => { },
+  rooms: [],
 });
 
 export { RoomCommentContext };
